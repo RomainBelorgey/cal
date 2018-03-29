@@ -3,6 +3,7 @@
 package cal
 
 import "time"
+import "strconv"
 
 // IsWeekend reports whether the given date falls on a weekend.
 func IsWeekend(date time.Time) bool {
@@ -295,4 +296,20 @@ func (c *Calendar) AddSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 		}
 	}
 	return s
+}
+
+func (c *Calendar) String() string {
+	str := ""
+	t := time.Now()
+	for i := range c.holidays {
+		for j := range c.holidays[i] {
+			if i == 0 {
+				month, day := c.holidays[i][j].Func(t.Year(), t.Location())
+				str = str + strconv.Itoa(day) + " " + month.String() + "\n"
+			} else {
+				str = str + strconv.Itoa(c.holidays[i][j].Day) + " " + c.holidays[i][j].Month.String() + "\n"
+			}
+		}
+	}
+	return str
 }
