@@ -303,11 +303,11 @@ func (c *Calendar) String() string {
 	t := time.Now()
 	for i := range c.holidays {
 		for j := range c.holidays[i] {
-			if i == 0 || c.holidays[i][j].Day == 0 {
-				month, day := c.holidays[i][j].Func(t.Year(), c.holidays[i][j].lastLoc)
+			if i == 0 {
+				month, day := c.holidays[i][j].Func(t.Year(), t.Location())
 				str = str + strconv.Itoa(day) + " " + month.String() + "\n"
 			} else {
-				str = str + strconv.Itoa(c.holidays[i][j].Day) + " " + c.holidays[i][j].Weekday.String() + " " + c.holidays[i][j].Month.String() + "\n"
+				str = str + strconv.Itoa(c.holidays[i][j].Day) + " " + c.holidays[i][j].Month.String() + "\n"
 			}
 		}
 	}
