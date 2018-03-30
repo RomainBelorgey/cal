@@ -304,8 +304,10 @@ func (c *Calendar) String() string {
 	for i := range c.holidays {
 		for j := range c.holidays[i] {
 			if i == 0 {
-				month, day := c.holidays[i][j].Func(t.Year(), t.Location())
+				month, day := c.holidays[i][j].Func(t.Year(), c.holidays[i][j].lastLoc)
 				str = str + strconv.Itoa(day) + " " + month.String() + "\n"
+			} else if c.holidays[i][j].Day == 0 {
+				str = str + "The " + strconv.Itoa(c.holidays[i][j].Offset) + " " + c.holidays[i][j].Weekday.String() + " of " + c.holidays[i][j].Month.String() + "\n"
 			} else {
 				str = str + strconv.Itoa(c.holidays[i][j].Day) + " " + c.holidays[i][j].Month.String() + "\n"
 			}
